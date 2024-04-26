@@ -1,0 +1,9 @@
+<!-- <meta http-equiv="refresh" content="1" /> -->
+<style>{{ css }}</style>
+<script>
+    const interval = setInterval(function() {
+        let apm = document.getElementById('apm');
+        let data = fetch("/apm").then((data) => data.json()).then((data) => apm.textContent = data.apm + " APM").await;
+    }, 1000);
+</script>
+<p id="apm" class="apm">0 APM</p>

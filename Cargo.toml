@@ -1,0 +1,15 @@
+[package]
+name = "action"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.82"
+askama = { version = "0.12.1", features = ["with-axum"] }
+askama_axum = "0.4.0"
+axum = "0.7.5"
+dotenv = "0.15.0"
+lazy_static = "1.4.0"
+rdev = "0.5.3"
+serde = { version = "1.0.198", features = ["derive"] }
+tokio = { version = "1.37.0", features = ["full"] }
