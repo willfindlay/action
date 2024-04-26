@@ -2,6 +2,10 @@
 name = "action"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+authors = ["William Findlay"]
+homepage = "https://www.github.com/willfindlay/action"
+description = "An actions per minute (APM) counter intended for use as a browser source in OBS."
 
 [dependencies]
 anyhow = "1.0.82"
