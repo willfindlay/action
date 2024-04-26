@@ -17,3 +17,6 @@ lazy_static = "1.4.0"
 rdev = "0.5.3"
 serde = { version = "1.0.198", features = ["derive"] }
 tokio = { version = "1.37.0", features = ["full"] }
+
+[build-dependencies]
+winres = "0.1.12"
