@@ -11,7 +11,7 @@ Action uses WinAPI hooks to count the number of mouse button presses and keystro
 You have two options for installation:
 
 1. Build from source and optionally add a shortcut to your startup folder. This is recommended for technically proficient users. Simply clone and run `cargo build --release`. You may then optionally create a shortcut to the resulting executable in your startup folder.
-2. Use the provided installer in the latest release (LINK COMING SOON).
+2. Use the [provided installer][installer] in the latest release.
 
 **IMPORTANT WARNING:** See the section below about adding a Windows Defender exclusion **BEFORE** you attempt to install. Otherwise, the executable will be automatically removed.
 
@@ -34,3 +34,5 @@ To add your APM to OBS, add a browser source and then simply set the URL to `loc
 ```css
 .apm {color: #bf6330; -webkit-text-stroke: 4px #1f2525;}
 ```
+
+[installer]: https://github.com/willfindlay/action/releases/download/v0.1.0/ActionSetup.exe
