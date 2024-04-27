@@ -15,6 +15,7 @@ dependencies = [
  "rdev",
  "serde",
  "tokio",
+ "windows-sys 0.52.0",
  "winres",
 ]
 

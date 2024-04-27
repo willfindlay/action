@@ -1,11 +1,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod hooks;
 mod template;
 mod tracker;
 
 use anyhow::Result;
 use axum::{routing::get, Router};
-use rdev::Event;
+use hooks::listen;
 use std::{env, sync::Arc, thread};
 use template::{APMData, APMTemplate};
 use tokio::sync::{mpsc::unbounded_channel, Mutex};
@@ -20,9 +21,9 @@ async fn main() -> Result<()> {
 
     let (schan, rchan) = unbounded_channel();
     let _listener = thread::spawn(move || {
-        rdev::listen(move |event: Event| {
+        listen(move || {
             schan
-                .send(event)
+                .send(())
                 .unwrap_or_else(|e| eprintln!("could not send event: {}", e))
         })
         .expect("could not listen");

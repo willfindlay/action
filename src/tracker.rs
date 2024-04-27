@@ -2,7 +2,6 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use anyhow::Result;
-use rdev::Event;
 use tokio::sync::mpsc::UnboundedReceiver;
 use tokio::sync::Mutex;
 
@@ -57,22 +56,17 @@ impl Tracker {
         acc
     }
 
-    pub async fn track(self: Arc<Self>, rchan: Arc<Mutex<UnboundedReceiver<Event>>>) -> Result<()> {
+    pub async fn track(self: Arc<Self>, rchan: Arc<Mutex<UnboundedReceiver<()>>>) -> Result<()> {
         let rchan = rchan.clone();
 
         tokio::spawn({
             let tracker = self.clone();
             async move {
                 loop {
-                    let Some(event) = rchan.lock().await.recv().await else {
+                    let Some(_) = rchan.lock().await.recv().await else {
                         continue;
                     };
-                    match event.event_type {
-                        rdev::EventType::KeyRelease(_) | rdev::EventType::ButtonRelease(_) => {
-                            tracker.add().await;
-                        }
-                        _ => {}
-                    }
+                    tracker.add().await;
                 }
             }
         });
