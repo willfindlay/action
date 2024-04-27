@@ -28,8 +28,10 @@ async fn main() -> Result<()> {
         .expect("could not listen");
     });
 
-    let tracker_track = tracker.clone();
-    tracker_track.track(Arc::new(Mutex::new(rchan))).await?;
+    {
+        let tracker = tracker.clone();
+        tracker.track(Arc::new(Mutex::new(rchan))).await?;
+    }
 
     let app = Router::new()
         .route(

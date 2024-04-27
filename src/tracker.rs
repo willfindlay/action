@@ -58,27 +58,31 @@ impl Tracker {
     }
 
     pub async fn track(self: Arc<Self>, rchan: Arc<Mutex<UnboundedReceiver<Event>>>) -> Result<()> {
-        let ticker = self.clone();
-        let tracker = self.clone();
         let rchan = rchan.clone();
 
-        tokio::spawn(async move {
-            loop {
-                let Some(event) = rchan.lock().await.recv().await else {
-                    continue;
-                };
-                match event.event_type {
-                    rdev::EventType::KeyRelease(_) | rdev::EventType::ButtonRelease(_) => {
-                        tracker.add().await;
+        tokio::spawn({
+            let tracker = self.clone();
+            async move {
+                loop {
+                    let Some(event) = rchan.lock().await.recv().await else {
+                        continue;
+                    };
+                    match event.event_type {
+                        rdev::EventType::KeyRelease(_) | rdev::EventType::ButtonRelease(_) => {
+                            tracker.add().await;
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 }
             }
         });
-        tokio::spawn(async move {
-            loop {
-                tokio::time::sleep(Duration::from_secs(1)).await;
-                ticker.increment_tick().await;
+        tokio::spawn({
+            let tracker = self.clone();
+            async move {
+                loop {
+                    tokio::time::sleep(Duration::from_secs(1)).await;
+                    tracker.increment_tick().await;
+                }
             }
         });
         Ok(())
