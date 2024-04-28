@@ -15,7 +15,9 @@ use tracker::Tracker;
 #[tokio::main]
 async fn main() -> Result<()> {
     let _ = dotenv::dotenv();
+    tracing_subscriber::fmt::init();
     let port = env::var("ACTION_PORT").unwrap_or_else(|_| "3333".into());
+    tracing::info!(port = port, "Configured port");
 
     let tracker = Arc::new(Tracker::default());
 
@@ -24,7 +26,7 @@ async fn main() -> Result<()> {
         listen(move || {
             schan
                 .send(())
-                .unwrap_or_else(|e| eprintln!("could not send event: {}", e))
+                .unwrap_or_else(|e| tracing::error!(err = ?e, "Could not send event"))
         })
         .expect("could not listen");
     });
@@ -51,6 +53,7 @@ async fn main() -> Result<()> {
                 })
             }),
         );
+    tracing::info!("Starting webserver");
     let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", port)).await?;
     axum::serve(listener, app).await?;
     Ok(())

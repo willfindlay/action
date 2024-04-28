@@ -34,6 +34,7 @@ impl Tracker {
         let mut inner = self.inner.lock().await;
         let tick = inner.tick;
         inner.actions[tick % WINDOW_SIZE] += 1;
+        tracing::trace!(total = inner.actions[tick % WINDOW_SIZE], "add");
     }
 
     pub async fn increment_tick(&self) {
@@ -41,6 +42,7 @@ impl Tracker {
         inner.tick += 1;
         let tick = inner.tick;
         inner.actions[tick % WINDOW_SIZE] = 0;
+        tracing::debug!(new = tick, "increment_tick");
     }
 
     pub async fn apm(&self) -> u64 {
@@ -64,6 +66,7 @@ impl Tracker {
             async move {
                 loop {
                     let Some(_) = rchan.lock().await.recv().await else {
+                        tracing::error!("received null event through channel");
                         continue;
                     };
                     tracker.add().await;

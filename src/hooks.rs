@@ -5,7 +5,7 @@ use windows_sys::Win32::{
     Foundation::{GetLastError, HINSTANCE, LPARAM, LRESULT, WPARAM},
     UI::WindowsAndMessaging::{
         CallNextHookEx, GetMessageA, SetWindowsHookExA, HHOOK, WH_KEYBOARD_LL, WH_MOUSE_LL,
-        WM_KEYDOWN, WM_LBUTTONDOWN, WM_MBUTTONDOWN, WM_RBUTTONDOWN, WM_SYSKEYDOWN, WM_XBUTTONDOWN,
+        WM_KEYDOWN, WM_LBUTTONDOWN, WM_MBUTTONDOWN, WM_RBUTTONDOWN, WM_SYSKEYDOWN,
     },
 };
 
@@ -39,7 +39,6 @@ unsafe fn set_keyboard_hook(callback: RawCallback) -> Result<()> {
 unsafe extern "system" fn raw_callback(code: c_int, param: WPARAM, lpdata: LPARAM) -> LRESULT {
     if param == WM_LBUTTONDOWN as usize
         || param == WM_RBUTTONDOWN as usize
-        || param == WM_XBUTTONDOWN as usize
         || param == WM_MBUTTONDOWN as usize
         || param == WM_KEYDOWN as usize
         || param == WM_SYSKEYDOWN as usize

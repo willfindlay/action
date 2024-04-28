@@ -17,6 +17,8 @@ lazy_static = "1.4.0"
 rdev = "0.5.3"
 serde = { version = "1.0.198", features = ["derive"] }
 tokio = { version = "1.37.0", features = ["full"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 windows-sys = { version = "0.52.0", features = ["Win32_UI_Input_KeyboardAndMouse", "Win32_UI_WindowsAndMessaging"] }
 
 [build-dependencies]
