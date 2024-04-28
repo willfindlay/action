@@ -35,4 +35,4 @@ To add your APM to OBS, add a browser source and then simply set the URL to `loc
 .apm {color: #bf6330; -webkit-text-stroke: 4px #1f2525;}
 ```
 
-[installer]: https://github.com/willfindlay/action/releases/download/v0.1.0/ActionSetup.exe
+[installer]: https://github.com/willfindlay/action/releases/download/v0.1.1/ActionSetup.exe
